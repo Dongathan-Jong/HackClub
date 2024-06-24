@@ -69,4 +69,121 @@ void loop(){
   	}
     
   }
+
+   if(answer)
+  {
+    
+    if(digitalRead(middle) == 0)
+    {
+      currentDigit++;
+      delay(100);
+    }
+    if(currentDigit == 10)
+    {
+      currentDigit = 0;
+    }
+    lcd.setCursor(digitPlace,1);
+    lcd.print(currentDigit);
+    
+    if(digitalRead(right) == 0 && digitPlace < 2)
+    {
+      delay(100);
+      if(digitPlace == 0)
+      {
+        answers = (currentDigit * 100);
+      }
+      if(digitPlace == 1)
+      {
+        answers = answers + (currentDigit * 10);
+      }
+      if(digitPlace == 2)
+      {
+        answers = answers + currentDigit;
+      }
+      
+      currentDigit = 0;
+      if(digitPlace < 2)
+      {
+      	digitPlace++;
+      }
+      
+    }
+    Serial.println(answers);
+    
+    if(digitalRead(left) == 0)
+    {
+      answers = answers + currentDigit;
+      
+      if(option == 1)
+      {
+        if(firstInt+secondInt == answers)
+        {
+          lcd.clear();
+          lcd.print("Correct!!!");
+          delay(500);
+          answer = false;
+          questionSelection = true;
+          lcd.clear();
+        }
+        else
+        {
+          lcd.clear();
+          lcd.print("Incorrect!!!");
+          delay(500);
+          answer = false;
+          questionSelection = true;
+          lcd.clear();
+        }
+      }
+      if(option == 2)
+      {
+        if(firstInt-secondInt == answers)
+        {
+          lcd.clear();
+          lcd.print("Correct!!!");
+          delay(500);
+          answer = false;
+          questionSelection = true;
+          lcd.clear();
+        }
+        else
+        {
+          lcd.clear();
+          lcd.print("Incorrect!!!");
+          delay(500);
+          answer = false;
+          questionSelection = true;
+          lcd.clear();
+        }
+      }
+      if(option == 3)
+      {
+        if(firstInt*secondInt == answers)
+        {
+          lcd.clear();
+          lcd.print("Correct!!!");
+          delay(500);
+          answer = false;
+          questionSelection = true;
+          lcd.clear();
+        }
+        else
+        {
+          lcd.clear();
+          lcd.print("Incorrect!!!");
+          delay(500);
+          answer = false;
+          questionSelection = true;
+          lcd.clear();
+        }
+      }
+      delay(100);
+      
+      currentDigit = 0;
+      digitPlace = 0;
+      
+    }
+  }
+  
+
 }
