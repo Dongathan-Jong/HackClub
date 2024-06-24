@@ -36,6 +36,37 @@ void setup()
 }
 
 void loop(){
-  
-
+  if(questionSelection)
+  {
+    lcd.setCursor(0,0);
+    lcd.print("Select a mode:");
+  	if(digitalRead(left) == 0)
+  	{
+      delay(100);
+  	  option = 1;
+      questionSelection = false;
+      firstInt = random(499);
+      secondInt =  random(499);
+      lcd.clear();
+  	}
+  	else if(digitalRead(middle) == 0)
+  	{
+      delay(100);
+  	  option = 2;
+      questionSelection = false;
+      firstInt = random(500,1000);
+      secondInt = random(250,499);
+      lcd.clear();
+  	}
+  	else if(digitalRead(right) == 0)
+  	{
+      delay(100);
+  	  option = 3;
+      questionSelection = false;
+      firstInt = random(10,30);
+      secondInt = random(10,30);
+      lcd.clear();
+  	}
+    
+  }
 }
