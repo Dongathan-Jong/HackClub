@@ -69,8 +69,31 @@ void loop(){
   	}
     
   }
-
-   if(answer)
+  
+  
+  if(questionSelection == false && answer == false)
+  {
+  	lcd.setCursor(0,0);
+  	
+  	lcd.print(firstInt);
+  	if(option == 1)
+  	{
+  	  lcd.print(" + ");
+  	}
+  	else if(option == 2)
+  	{
+  	  lcd.print(" - ");
+  	}
+  	else
+  	{
+  	  lcd.print(" x ");
+  	}
+  	lcd.print(secondInt);
+    lcd.print("= ?");
+    answer = true;
+  }
+  
+  if(answer)
   {
     
     if(digitalRead(middle) == 0)
