@@ -431,4 +431,137 @@ public static void closeAccount(String userNumber, String[] info)
       }
    }
 
-
+ public static void withdraw(int userNumber, String[] info)
+   {
+      Scanner sc = new Scanner(System.in);
+      String whichAccount;
+      boolean validInput = false;
+      boolean validAmount = false;
+      int countLines = -1;
+      int lineNumber = -1;
+      String line;
+      String splitBy = ",";
+      double amount=0;
+      int intedAmount = -1;
+      double[] detectNegative;
+      double[] detectTooMuch;
+      try
+      {
+         BufferedReader in = new BufferedReader(new FileReader(userNumber + ".csv"));
+         BufferedWriter out = new BufferedWriter(new FileWriter(userNumber + ".csv", false));
+      
+         // check if user has both accounts 
+         if (!info[4].equals("-1") && !info[5].equals("-1"))
+         {
+            System.out.println("Which account would you like to withdraw from?\n1. savings\n2. chequeings");
+            while(validInput==false)
+            {
+               whichAccount = sc.nextLine();
+               switch(whichAccount)
+               {
+                  case "1":
+                     System.out.println("How much would you like to withdraw?");
+                     while(validAmount==false)
+                     {
+                        amount=Double.parseDouble(sc.nextLine());
+                        if (amount<0)
+                        {
+                           System.out.println("Please enter a positive number.");
+                        }
+                        else if((Double.parseDouble(info[4])-amount)<0)
+                        {
+                           System.out.println("Please enter a number smaller than your current balance of $" + info[4]);
+                        }
+                        else
+                        {
+                           validAmount=true;
+                        }
+                     }
+                     info[4]=Double.toString(Math.round((Double.parseDouble(info[4])-amount)*100)/100.0);
+                     out.write(info[0] + splitBy + info[1] + splitBy + info[2] + splitBy + info[3] + splitBy + info[4] + splitBy + info[5]);
+                     validInput=true;
+                     break;
+                  case "2":
+                     System.out.println("How much would you like to withdraw?");
+                     while(validAmount==false)
+                     {
+                        amount=Double.parseDouble(sc.nextLine());
+                        if (amount<0)
+                        {
+                           System.out.println("Please enter a positive number.");
+                        }
+                        else if((Double.parseDouble(info[5])-amount)<0)
+                        {
+                           System.out.println("Please enter a number smaller than your current balance of $" + info[4]);
+                        }
+                        else
+                        {
+                           validAmount=true;
+                        }
+                     }
+                     info[5]=Double.toString(Math.round((Double.parseDouble(info[5])-amount)*100)/100.0);
+                     out.write(info[0] + splitBy + info[1] + splitBy + info[2] + splitBy + info[3] + splitBy + info[4] + splitBy + info[5]);
+                     validInput=true;
+                     break;
+                  default:
+                     System.out.println("Please enter a valid account name.\n1. savings\n2. chequeings");
+               }
+            }
+         }
+         else if (info[4].equals("-1") && info[5].equals("-1"))
+         {
+            System.out.println("Error: You do not have any accounts. Please create one to withdraw from.");
+         }
+         else if (!info[4].equals("-1"))
+         {
+            System.out.println("How much would you like to withdraw?");
+            while(validAmount==false)
+            {
+               amount=Double.parseDouble(sc.nextLine());
+               if (amount<0)
+               {
+                  System.out.println("Please enter a positive number.");
+               }
+               else if((Double.parseDouble(info[4])-amount)<0)
+               {
+                  System.out.println("Please enter a number smaller than your current balance of $" + info[4]);
+               }
+               else
+               {
+                  validAmount=true;
+               }
+            }
+            info[4]=Double.toString(Math.round((Double.parseDouble(info[4])-amount)*100)/100.0);
+            out.write(info[0] + splitBy + info[1] + splitBy + info[2] + splitBy + info[3] + splitBy + info[4] + splitBy + info[5]);
+            validInput=true;
+         }
+         else
+         {
+            System.out.println("How much would you like to withdraw?");
+            while(validAmount==false)
+            {
+               amount=Double.parseDouble(sc.nextLine());
+               if (amount<0)
+               {
+                  System.out.println("Please enter a positive number.");
+               }
+               else if((Double.parseDouble(info[5])-amount)<0)
+               {
+                  System.out.println("Please enter a number smaller than your current balance of $" + info[4]);
+               }
+               else
+               {
+                  validAmount=true;
+               }
+            }
+            info[5]=Double.toString(Math.round((Double.parseDouble(info[5])-amount)*100)/100.0);
+            out.write(info[0] + splitBy + info[1] + splitBy + info[2] + splitBy + info[3] + splitBy + info[4] + splitBy + info[5]);
+            validInput=true;
+         }
+         out.close();
+      }
+      catch(IOException e)
+      {
+         System.out.println(e + "problem reading" + userNumber + ".csv");
+      }
+   }
