@@ -194,3 +194,92 @@ public static void closeAccount(String userNumber, String[] info)
          System.out.print(e + "Please enter a valid option!");
       }
    }
+
+   public static void newAccount(String accountNumber, String values[])
+   {
+      try
+      {
+         String accountType;
+         String userChoice;
+         Scanner sc = new Scanner(System.in);
+         BufferedWriter writer = new BufferedWriter(new FileWriter(accountNumber+ ".csv"));
+         
+         if (Double.parseDouble(values[4]) == -1 && Double.parseDouble(values[5]) == -1)
+         {
+            System.out.println("You have neither accounts, please enter an option: ");
+            System.out.println("Option 1 : Savings, type '1'");
+            System.out.println("Option 2 : Chequing, type '2'");
+         
+            accountType = sc.nextLine();
+            
+            switch (Integer.parseInt(accountType))
+            {
+               case 1:
+               
+                  System.out.println("Savings account created! Current balance: $0.00");
+                  values[3] = "0.00";
+                  break;
+                  
+               case 2:
+               
+                  System.out.println("Chequing account created! Current balance: $0.00");
+                  values[4] = "0.00";
+                  break;
+            
+               default:
+               
+                  System.out.print("Error!");
+                  break;
+            
+            
+            }
+         }
+         else if (Double.parseDouble(values[4]) != -1 && Double.parseDouble(values[5]) == -1)
+         {
+            System.out.print("Are you sure you would like to create a Chequings account? Press 1 to confirm: ");
+            userChoice = sc.nextLine();
+            
+            if (Integer.parseInt(userChoice) == 1)
+            {
+               System.out.println("Chequings account successfully created, current balance: $0.00");
+               values[5] = "0.00";
+            }
+            else
+            {
+               System.out.print("Error!");
+            }
+         }
+         else if (Double.parseDouble(values[5]) != -1 && Double.parseDouble(values[4]) == -1)
+         {
+            System.out.print("Are you sure you would like to create a Savings account? Press 1 to confirm: ");
+            userChoice = sc.nextLine();
+            
+            if (Integer.parseInt(userChoice) == 2)
+            {
+               System.out.println("Savings acount successfully created, current balance: $0.00");
+               values[4] = "0.00";
+            }
+            else
+            {
+               System.out.print("Error!");
+            }
+         }
+      
+         for (int i = 0; i < 6;i++)
+         {
+            writer.write(values[i]);
+            writer.write(",");
+         }
+         writer.close();
+      }
+      catch (IOException e)
+      {
+         System.out.print(e + "Error! Something went wrong when trying to access the filesystem.");
+      }
+      catch (InputMismatchException e)
+      {
+         System.out.print(e + "Please enter a valid number!");
+      }
+      
+   
+   }
