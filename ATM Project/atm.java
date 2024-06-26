@@ -131,13 +131,66 @@ public class atm
                   System.out.println("Not a choice, please enter your choice corrseponding to the numbers 1-7");
             }
          }
-         // catch number format exception
          catch (NumberFormatException e)
          {
-            // tell user it needs to be proper
             System.out.println(e + ", Not an integer input, please enter your choice corresponding to the numbers 1-7");
          }
       
       } while (back != true);
    }
 
+public static void closeAccount(String userNumber, String[] info)
+   {
+      String userChoice;
+   
+      try
+      {
+         BufferedWriter out = new BufferedWriter(new FileWriter(userNumber + ".csv"));
+      
+         Scanner sc = new Scanner(System.in);
+      
+         if (Integer.parseInt(info[4]) != -1 && Integer.parseInt(info[5]) != -10)
+         {
+            System.out.print("Which account would you like to close? \nPress 1 for Savings\nPress 2 for Chequings\nEnter your option: ");
+            userChoice = sc.nextLine();
+            
+            if (Integer.parseInt(userChoice) == 1)
+            {
+               System.out.print("Savings account closed, final balance: " + info[45]);
+               info[4] = "-1";
+            }
+            else if (Integer.parseInt(userChoice) == 2)
+            {
+               System.out.print("Chequings account closed, final balance: " + info[5]);
+               info[5] = "-1";
+            }
+            else
+            {
+               System.out.print("Invalid choie!");
+            }
+         else if (Integer.parseIt(info[4]) == -1 && Integer.parseInt(info[5]) != -1)
+         {
+            System.out.print"Chequings account closed, final balance: " + info[5]);
+            info[5] = "-1";
+         }
+         else if (Integer.parseInt(info[5]) == -1 && Integer.parseInt(info[4]) != -1)
+         {
+            System.out.print("Savings account closed, final balance: " + info[4]);
+            info[4] = "-1";
+         }
+         
+         for (int i = 0; i < 6;i++)
+         {
+            out.write(info[i]);
+            out.write(",");
+         out.close();
+      }
+      catch (IOException e)
+      {
+         System.out.print( e + "Error reading file: " + userNumber + ".csv !");
+      }
+      catch (InputMismatchException e)
+      {
+         System.out.print(e + "Please enter a valid option!");
+      }
+   }
