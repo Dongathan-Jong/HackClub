@@ -66,3 +66,78 @@ public class atm
          }
       }  
    }
+
+
+    public static void menuOfOptions(int userNumber, String values[])
+   {
+      // create scanner and variables
+      Scanner sc = new Scanner(System.in);
+      int choice;
+      boolean back = false;
+   
+      // do while loop
+      do
+      {
+         // attempt to run the code
+         try
+         {
+            // print out the menu of options
+            System.out.println("Please select an option: ");
+            System.out.println("     Check Balance[1]");
+            System.out.println("     Deposit Money[2]");
+            System.out.println("        Withdraw  [3]");
+            System.out.println("     Close Account[4]");
+            System.out.println("      New Account [5]");
+            System.out.println("      Change PIN  [6]");
+            System.out.println("        Log Out   [7]");
+         
+            // get a choice from the user
+            choice = Integer.parseInt(sc.nextLine());
+         
+            // switch case for the user
+            switch (choice)
+            {
+               case 1:
+                  // enter checkbalance
+                  checkBalance(userNumber);
+                  break;
+               case 2:
+                  // enter deposit
+                  deposit(userNumber, values);
+                  break;
+               case 3:
+                  // enter withdraw
+                  withdraw(userNumber, values);
+                  break;
+               case 4:
+                  // enter closeaccount
+                  closeAccount(Integer.toString(userNumber), values);
+                  break;
+               case 5:
+                  // enter newaccount
+                  newAccount(Integer.toString(userNumber), values);
+                  break;
+               case 6:
+                  // enter changepin
+                  changePin(Integer.toString(userNumber));
+                  break;
+               case 7:
+                  // exit loop and tell user
+                  System.out.println("Logging out... Returning to menu."); 
+                  back = true;
+                  break;
+               default:
+                  // tell user choice is not valid
+                  System.out.println("Not a choice, please enter your choice corrseponding to the numbers 1-7");
+            }
+         }
+         // catch number format exception
+         catch (NumberFormatException e)
+         {
+            // tell user it needs to be proper
+            System.out.println(e + ", Not an integer input, please enter your choice corresponding to the numbers 1-7");
+         }
+      
+      } while (back != true);
+   }
+
