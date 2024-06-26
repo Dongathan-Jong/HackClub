@@ -283,3 +283,152 @@ public static void closeAccount(String userNumber, String[] info)
       
    
    }
+
+    public static void newProfile()
+   {
+      Random rnd = new Random();
+      String userChoice;
+      String userNewPin="";
+      String userFirstName;
+      String userLastName;
+      Scanner sc = new Scanner(System.in);
+      boolean repeat=true;
+      boolean repeatPin=true;
+      
+      System.out.print("Incorrect account number! Would you like to create a new account? Type 'yes' or 'no': ");
+      
+      while(repeat==true)
+      {
+         userChoice = sc.nextLine();
+         if (userChoice.compareTo("yes") == 0)
+         {
+            int accountNumber;
+         
+            try
+            {
+               accountNumber = rnd.nextInt(899999) + 100000;
+               
+               BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("%06d", accountNumber) + ".csv"));
+                         
+               System.out.println("Your account number is: " + String.format("%06d", accountNumber));
+                  
+               System.out.print("Please enter a 6 digit pin: ");
+               
+               
+               while(repeatPin==true)
+               {
+                  userNewPin = sc.nextLine();
+                  try
+                  {
+                     if(Integer.parseInt(userNewPin)<100000 || Integer.parseInt(userNewPin)>999999)
+                     {
+                        System.out.print("Error: Pin is not 6 digits. Please enter a 6 digit pin: ");
+                        int[] breaker= new int[-1];
+                     }
+                     repeatPin=false;
+                  }
+                  catch(NumberFormatException e)
+                  {
+                     System.out.print("Error: Invalid pin. Please enter a 6 digit pin: ");
+                  }
+                  catch(NegativeArraySizeException e)
+                  {
+                  }
+               }
+               System.out.print("Please enter your first name: ");
+               userFirstName = sc.nextLine();
+                  
+               System.out.print("Please enter your last name: ");
+               userLastName = sc.nextLine();
+               
+               String[] data = {Integer.toString(accountNumber), userNewPin, userFirstName, userLastName, "-1", "-1"};
+               
+               for (int i = 0; i < 6;i++)
+               {
+                  writer.write(data[i]);
+                  writer.write(",");
+               }
+               repeat=false;
+               writer.close();
+            }
+            catch (IOException e)
+            {
+               System.out.println(e + "ERROR!! Something went wrong while opening a file!");
+            }
+            catch(NumberFormatException e)
+            {
+               System.out.println("Please enter a valid option: yes or no");
+            }
+         }
+         else if(userChoice.compareTo("no") == 0)
+         {
+            repeat=false;
+         }
+         else
+         {
+            {
+               System.out.println("Error: Please enter yes or no");
+            }
+         }
+      }
+   }
+
+   public static void checkBalance(int userNumber)
+   {
+      Scanner sc = new Scanner(System.in);
+      int whichAccount;
+      boolean validInput = false;
+      int countLines = -1;
+      int lineNumber = -1;
+      String line;
+      String splitBy = ",";
+      
+      try
+      {
+         BufferedReader in = new BufferedReader(new FileReader(userNumber + ".csv"));
+         line=in.readLine();
+         
+         String[] info = line.split(splitBy, -1);
+         
+         if (!info[4].equals("-1") && !info[5].equals("-1"))
+         {
+            System.out.println("Which account would you like to check the balance of?\n1. savings\n2. chequeings");
+            whichAccount = sc.nextInt();
+            while(validInput==false)
+            {
+               switch(whichAccount)
+               {
+                  case 1:
+                     System.out.println("Your savings account balance is: " + info[4]);
+                     validInput=true;
+                     break;
+                  case 2:
+                     System.out.println("Your chequeings account balance is: " + info[5]);
+                     validInput=true;
+                     break;
+                  default:
+                     System.out.println("Please enter a valid account name.\n1. savings\n2. chequeings");
+                     break;
+               }
+            }
+         }
+         else if (info[4].equals("-1") && info[5].equals("-1"))
+         {
+            System.out.println("Error: You do not have any accounts. Please create one to check your balance.");
+         }
+         else if (!info[4].equals("-1"))
+         {
+            System.out.println("Your savings account balance is: " + info[4]);
+         }
+         else
+         {
+            System.out.println("Your chequeings account balance is: " + info[5]);
+         }
+      }
+      catch(IOException e)
+      {
+         System.out.println(e + "problem reading " + userNumber + ".csv");
+      }
+   }
+
+
