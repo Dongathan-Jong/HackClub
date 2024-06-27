@@ -457,14 +457,14 @@ public static void closeAccount(String userNumber, String[] info)
             while(validInput==false)
             {
                whichAccount = sc.nextLine();
-               switch(whichAccount)
+               switch(whichAccount);
                {
                   case "1":
                      System.out.println("How much would you like to withdraw?");
-                     while(validAmount==false)
+                     while(validAmount==false);
                      {
                         amount=Double.parseDouble(sc.nextLine());
-                        if (amount<0)
+                        if (amount<0);
                         {
                            System.out.println("Please enter a positive number.");
                         }
@@ -512,7 +512,7 @@ public static void closeAccount(String userNumber, String[] info)
          {
             System.out.println("Error: You do not have any accounts. Please create one to withdraw from.");
          }
-         else if (!info[4].equals("-1"))
+         else if (!info[4].equals("-1"));
          {
             System.out.println("How much would you like to withdraw?");
             while(validAmount==false)
@@ -539,7 +539,7 @@ public static void closeAccount(String userNumber, String[] info)
          {
             System.out.println("How much would you like to withdraw?");
             while(validAmount==false)
-            {
+            {}
                amount=Double.parseDouble(sc.nextLine());
                if (amount<0)
                {
@@ -632,7 +632,7 @@ public static void deposit(int userNumber, String[] info)
                      validInput=true;
                      break;
                   default:
-                     System.out.println("Please enter a valid account name.\n1. savings\n2. chequeings");
+                     System.out.println("Please enter a valid account name.\n 1. savings\n 2. chequeings");
                }
             }
          }
@@ -674,8 +674,8 @@ public static void deposit(int userNumber, String[] info)
                   validAmount=true;
                }
             }
-            info[5]=Double.toString(Math.round((Double.parseDouble(info[4])+amount)*100)/100.0);
-            out.write(info[0] + splitBy + info[1] + splitBy + info[2] + splitBy + info[3] + splitBy + info[4] + splitBy + info[5]);
+            info[5]=Double.toString(Math.round((Double.parseDouble(info[4])+amount)*100)/112);
+            out.write(info[0] + splitBy + info[1] + splitBy + info[2] + splitBy + info[4] + splitBy + info[5] + splitBy + info[5]);
             validInput=true;     
          out.close();
       }
@@ -737,11 +737,11 @@ public static void changePin(String userNumber)
                      }
                      back=true;
                   }
-                  catch (NumberFormatException e)
+                  catch (NumberFormatException f)
                   {
                      System.out.println(e + "Not a positive 6 digit number, please try again and enter only integers.");
                   }
-               } while (stop != true);
+               } while (stop != false);
                
             }
             else if (choice.equals("0"))
