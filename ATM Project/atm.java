@@ -684,3 +684,89 @@ public static void deposit(int userNumber, String[] info)
          System.out.println(e + "problem reading" + userNumber + ".csv");
       }
    }
+
+public static void changePin(String userNumber)
+   {
+      // create scanner and variables
+      Scanner sc = new Scanner(System.in);
+      
+      String splitBy = ",";
+      String line;
+      String choice = " ";
+      
+      boolean back = false;
+      boolean stop = false;
+      
+      String newNumber;
+      
+      try
+      {
+         BufferedReader in = new BufferedReader(new FileReader(userNumber+".csv"));
+         line = in.readLine();
+         String[] info = line.split(splitBy);
+         in.close();
+         
+         BufferedWriter out = new BufferedWriter(new FileWriter(userNumber+".csv"));
+         do
+         {    \
+            System.out.println("Do you want to edit your pin?\nTo confirm, Enter your full name to continue. Otherwise press 0 to exit.");
+            choice=sc.nextLine();   
+               
+            
+            if (choice.equalsIgnoreCase(info[2] + " " + info[3]))
+            {
+               do
+               {  
+                  try
+                  {
+                     System.out.print("Enter your new 6 digit pin: ");
+                     newNumber = sc.nextLine();
+                     
+                     if (newNumber.length() >= 6 && newNumber.length() <= 6 && Integer.parseInt(newNumber) > 0)
+                     {
+                        System.out.println("Your new 6 PIN code is " + newNumber);
+                        info[1] = newNumber;
+                        out.write(info[0] + splitBy + info[1] + splitBy + info[2] + splitBy + info[3] + splitBy + info[4] + splitBy + info[5]);
+                        
+                        out.close();
+                        stop = true;
+                     }
+                     else if (Integer.parseInt(newNumber) < 0) 
+                     {
+                        System.out.println("New pin must be a positive 6 digit number, please try again.");
+                     }
+                     back=true;
+                  }
+                  catch (NumberFormatException e)
+                  {
+                     System.out.println(e + "Not a positive 6 digit number, please try again and enter only integers.");
+                  }
+               } while (stop != true);
+               
+            }
+            else if (choice.equals("0"))
+            {
+               System.out.println("Going back to menu of options... ");
+               out.write(info[0] + splitBy + info[1] + splitBy + info[2] + splitBy + info[3] + splitBy + info[4] + splitBy + info[5]);
+               out.close();
+               back = true;
+            }
+            else
+            {
+               System.out.print("Not a valid input, please enter your first and last with a space inbetween or 0 to exit.");
+            }
+         } while (back != true);
+      }
+      catch (FileNotFoundException e)
+      {
+         System.out.println(e + " User not found, going back to menu of options.");
+         back=true;
+      }
+      catch(IOException e)
+      {
+         
+         System.out.println(e + "File not found");
+      }
+   }
+   
+}
